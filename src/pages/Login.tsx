@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { saveEmail } from '../redux/actions';
+import { fetchData, saveEmail } from '../redux/actions';
 import store from '../redux';
 
 function Login() {
@@ -35,8 +35,9 @@ function Login() {
     setIsEmailValid(isValid);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     dispatch(saveEmail(email));
+    dispatch(await fetchData());
     console.log('current Email in Global State:', store.getState().user);
     navigate('/carteira');
   };

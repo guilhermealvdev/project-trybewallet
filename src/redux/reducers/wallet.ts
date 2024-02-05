@@ -10,8 +10,11 @@ const initialValue = {
 
 const walletReducer = (state = initialValue, action: AnyAction) => {
   switch (action.type) {
-    case 'TEMPORARIO_PRO_LINT_PASSAR':
-      return state;
+    case 'FETCH_WALLET':
+      return {
+        ...state,
+        currencies: action.payload,
+      };
     default:
       return state;
   }

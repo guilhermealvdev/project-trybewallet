@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
+import WalletForm from '../components/WalletForm';
 
 function Wallet() {
   const email = useSelector((rootReducer) => rootReducer.user.email);
@@ -9,6 +10,7 @@ function Wallet() {
     <>
       <h1>TrybeWallet</h1>
       <Header />
+      <WalletForm />
     </>
   );
 }
