@@ -13,6 +13,7 @@ export const saveEmail = (email: string) => {
 export const fetchData = async () => {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
+    
   return {
     type: 'FETCH_WALLET',
     payload: data

@@ -7,7 +7,8 @@ function WalletForm() {
 
   return (
     <>
-      <div>WalletForm</div>;
+      <hr />
+      <div>WalletForm</div>
       <form action="">
       <label htmlFor="despesa">Valor:</label>
       <input type="text" id="despesa" data-testid="value-input"/>
@@ -19,7 +20,7 @@ function WalletForm() {
       <select name="md" id="moeda" data-testid="currency-input">
         {Object.keys(moedas).map((moedasLista) => (
           <option key={moedasLista} value={moedasLista}>
-            {moedas[moedasLista].code}
+            {moedas[moedasLista]}
           </option>
         ))
         }
