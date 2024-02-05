@@ -10,7 +10,7 @@ import walletReducer from './wallet';
 
 const rootReducer = combineReducers({
   user: userReducer,
-  wallet: walletReducer
+  wallet: walletReducer,
 });
 
 export default rootReducer; // delete essa linha e configure os seus reducers

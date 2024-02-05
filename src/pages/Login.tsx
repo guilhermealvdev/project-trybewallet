@@ -37,7 +37,7 @@ function Login() {
 
   const handleLogin = () => {
     dispatch(saveEmail(email));
-    console.log('current Email in Global State:', store.getState().user.email)
+    console.log('current Email in Global State:', store.getState().user);
     navigate('/carteira');
   };
 
