@@ -12,14 +12,17 @@ const walletReducer = (state = initialValue, action: AnyAction) => {
   switch (action.type) {
     case 'FETCH_WALLET':
       const currenciesArray = Object.keys(action.payload);
-
       //Remover USDT
       const filteredCurrencies = currenciesArray.filter(currency => currency !== 'USDT');
-
       return {
         ...state,
         currencies: filteredCurrencies,
       };
+    case 'ADD_EXPENSE':
+      return {
+        ...state,
+        expenses: [...state.expenses, action.payload],
+      }
     default:
       return state;
   }

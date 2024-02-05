@@ -1,40 +1,144 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+
+let nextId = 0;
 
 function WalletForm() {
 
   const moedas = useSelector((rootReducer) => rootReducer.wallet.currencies);
-  console.log(moedas);
+  // console.log(moedas);
+  const dispatch = useDispatch();
 
+  const [minhaDespesa, setMinhaDespesa] = useState('');
+  const [minhaDesc, setMinhaDesc] = useState('');
+  const [minhaMoeda, setMinhaMoeda] = useState('USD');
+  const [meuPag, setMeuPag] = useState('dinheiro');
+  const [minhaTag, setMinhaTag] = useState('alimentacao');
+
+  const [despesaData, setDespesaData] = useState({
+    valor: minhaDespesa,
+    descricao: minhaDesc,
+    moeda: minhaMoeda,
+    metodoPagamento: meuPag,
+    tag: minhaTag,
+  });
+
+  const handleDespesaChange = (e) => {
+    const despesaX = e.target.value;
+    setMinhaDespesa(despesaX);
+    //console.log('Dados Alv Despesa:', minhaDespesa);
+  };
+
+  const handleDescChange = (e) => {
+    const descX = e.target.value;
+    setMinhaDesc(descX);
+    //console.log('Dados Alv Descrição:', minhaDesc);
+  };
+
+  const handleMoedaChange = (e) => {
+    const moedaX = e.target.value;
+    setMinhaMoeda(moedaX);
+    //console.log('Dados Alv Moeda:', minhaMoeda);
+  }
+
+  const handlePagChange = (e) => {
+    const pagX = e.target.value;
+    setMeuPag(pagX);
+    //console.log('Dados Alv Pagamento:', meuPag);
+  }
+
+  const handleTagChange = (e) => {
+    const TagX = e.target.value;
+    setMinhaTag(TagX);
+    //console.log('Dados Alv Tag:', minhaTag);
+  }
+
+  const despesaAdd = () => {
+    const novaDespesa = {
+      id: nextId++,
+      value: minhaDespesa,
+      currency: minhaMoeda,
+      method: meuPag,
+      tag: minhaTag,
+      description: minhaDesc,
+    };
+
+    dispatch({ type: 'ADD_EXPENSE', payload: novaDespesa });
+    setMinhaDespesa('');
+    setMinhaDesc('');
+    setMinhaMoeda('');
+    setMeuPag('');
+    setMinhaTag('');
+    // setDespesaData({
+    //   valor: minhaDespesa,
+    //   descricao: minhaDesc,
+    //   moeda: minhaMoeda,
+    //   metodoPagamento: meuPag,
+    //   tag: minhaTag,
+    // });
+    // console.log('Dados:', despesaData)
+  };
+  
   return (
     <>
       <hr />
       <div>WalletForm</div>
       <form action="">
       <label htmlFor="despesa">Valor:</label>
-      <input type="text" id="despesa" data-testid="value-input"/>
+      <input
+        type="number"
+        id="despesa"
+        data-testid="value-input"
+        onChange={handleDespesaChange}
+        value={ minhaDespesa }
+      />
 
       <label htmlFor="descricao">Descrição:</label>
-      <input type="text" id="descricao" data-testid="description-input"/>
+      <input
+        type="text"
+        id="descricao"
+        data-testid="description-input"
+        onChange={ handleDescChange }
+        value={ minhaDesc}
+      />
 
       <label htmlFor="moeda">Moeda:</label>
-      <select name="md" id="moeda" data-testid="currency-input">
-        {Object.keys(moedas).map((moedasLista) => (
-          <option key={moedasLista} value={moedasLista}>
-            {moedas[moedasLista]}
+      <select
+        name="md"
+        id="moeda"
+        data-testid="currency-input"
+        onChange={ handleMoedaChange }
+        value={ minhaMoeda}
+      >
+        {Object.entries(moedas).map(([codigo, nome]) => (
+          <option key={codigo} value={nome}>
+            {nome}
           </option>
         ))
         }
       </select>
-
+      
       <label htmlFor="pagamento">Método de Pagamento:</label>
-      <select name="pag" id="pagamento" data-testid="method-input">
+      <select
+        name="pag"
+        id="pagamento"
+        data-testid="method-input"
+        onChange={ handlePagChange }
+        value={ meuPag }
+      >
         <option value="dinheiro">Dinheiro</option>
         <option value="cartao-credito">Cartão de crédito</option>
         <option value="cartao-debito">Cartão de débito</option>
       </select>
 
       <label htmlFor="category">Tag:</label>
-      <select name="cat" id="category" data-testid="tag-input">
+      <select
+        name="cat"
+        id="category"
+        data-testid="tag-input"
+        onChange={ handleTagChange }
+        value={ minhaTag }
+      >
         <option value="alimentacao">Alimentação</option>
         <option value="lazer">Lazer</option>
         <option value="trabalho">Trabalho</option>
@@ -42,7 +146,7 @@ function WalletForm() {
         <option value="saude">Saúde</option>
       </select>
 
-      <button>Adicionar Despesa</button>
+      <button type="button" onClick={ despesaAdd }>Adicionar Despesa</button>
 
       </form>
     </>
