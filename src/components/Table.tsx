@@ -34,7 +34,9 @@ function Table() {
             <td>{parseFloat(expense.value).toFixed(2)}</td>
             <td>{expense.exchangeRates[expense.currency].name}</td>
             <td>{parseFloat(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
-            <td>{(expense.value * expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
+            <td>
+              {(expense.value * expense.exchangeRates[expense.currency].ask).toFixed(2)}
+            </td>
             <td>Real</td>
             <td>
               <button
