@@ -1,10 +1,9 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 let nextId = 0;
 
 function WalletForm() {
-
   const moedas = useSelector((rootReducer) => rootReducer.wallet.currencies);
   // console.log(moedas);
   const dispatch = useDispatch();
@@ -15,49 +14,49 @@ function WalletForm() {
   const [meuPag, setMeuPag] = useState('dinheiro');
   const [minhaTag, setMinhaTag] = useState('alimentacao');
 
-  //reservado, pode servir pra tabela?
-  const [despesaData, setDespesaData] = useState({
-    valor: minhaDespesa,
-    descricao: minhaDesc,
-    moeda: minhaMoeda,
-    metodoPagamento: meuPag,
-    tag: minhaTag,
-  });
+  // reservado, pode servir pra tabela?
+  // const [despesaData, setDespesaData] = useState({
+  //   valor: minhaDespesa,
+  //   descricao: minhaDesc,
+  //   moeda: minhaMoeda,
+  //   metodoPagamento: meuPag,
+  //   tag: minhaTag,
+  // });
 
   const handleDespesaChange = (e) => {
     const despesaX = e.target.value;
     setMinhaDespesa(despesaX);
-    //console.log('Dados Alv Despesa:', minhaDespesa);
+    // console.log('Dados Alv Despesa:', minhaDespesa);
   };
 
   const handleDescChange = (e) => {
     const descX = e.target.value;
     setMinhaDesc(descX);
-    //console.log('Dados Alv Descrição:', minhaDesc);
+    // console.log('Dados Alv Descrição:', minhaDesc);
   };
 
   const handleMoedaChange = (e) => {
     const moedaX = e.target.value;
     setMinhaMoeda(moedaX);
-    //console.log('Dados Alv Moeda:', minhaMoeda);
-  }
+    // console.log('Dados Alv Moeda:', minhaMoeda);
+  };
 
   const handlePagChange = (e) => {
     const pagX = e.target.value;
     setMeuPag(pagX);
-    //console.log('Dados Alv Pagamento:', meuPag);
-  }
+    // console.log('Dados Alv Pagamento:', meuPag);
+  };
 
   const handleTagChange = (e) => {
     const TagX = e.target.value;
     setMinhaTag(TagX);
-    //console.log('Dados Alv Tag:', minhaTag);
-  }
+    // console.log('Dados Alv Tag:', minhaTag);
+  };
 
   const despesaAdd = async () => {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const exchangeRatesData = await response.json();
-  
+
     const exchangeRates = {
       ...(minhaMoeda in exchangeRatesData ? exchangeRatesData[minhaMoeda] : {}),
     };
@@ -79,79 +78,78 @@ function WalletForm() {
     setMeuPag('dinheiro');
     setMinhaTag('alimentacao');
   };
-  
+
   return (
     <>
       <hr />
       <div>WalletForm</div>
       <form action="">
-      <label htmlFor="despesa">Valor:</label>
-      <input
-        type="number"
-        id="despesa"
-        data-testid="value-input"
-        onChange={handleDespesaChange}
-        value={ minhaDespesa }
-      />
+        <label htmlFor="despesa">Valor:</label>
+        <input
+          type="number"
+          id="despesa"
+          data-testid="value-input"
+          onChange={ handleDespesaChange }
+          value={ minhaDespesa }
+        />
 
-      <label htmlFor="descricao">Descrição:</label>
-      <input
-        type="text"
-        id="descricao"
-        data-testid="description-input"
-        onChange={ handleDescChange }
-        value={ minhaDesc}
-      />
+        <label htmlFor="descricao">Descrição:</label>
+        <input
+          type="text"
+          id="descricao"
+          data-testid="description-input"
+          onChange={ handleDescChange }
+          value={ minhaDesc }
+        />
 
-      <label htmlFor="moeda">Moeda:</label>
-      <select
-        name="md"
-        id="moeda"
-        data-testid="currency-input"
-        onChange={ handleMoedaChange }
-        value={ minhaMoeda}
-      >
-        {Object.entries(moedas).map(([codigo, nome]) => (
-          <option key={codigo} value={nome}>
-            {nome}
-          </option>
-        ))
-        }
-      </select>
-      
-      <label htmlFor="pagamento">Método de Pagamento:</label>
-      <select
-        name="pag"
-        id="pagamento"
-        data-testid="method-input"
-        onChange={ handlePagChange }
-        value={ meuPag }
-      >
-        <option value="dinheiro">Dinheiro</option>
-        <option value="cartao-credito">Cartão de crédito</option>
-        <option value="cartao-debito">Cartão de débito</option>
-      </select>
+        <label htmlFor="moeda">Moeda:</label>
+        <select
+          name="md"
+          id="moeda"
+          data-testid="currency-input"
+          onChange={ handleMoedaChange }
+          value={ minhaMoeda }
+        >
+          {Object.entries(moedas).map(([codigo, nome]) => (
+            <option key={ codigo } value={ nome }>
+              { nome }
+            </option>
+          ))}
+        </select>
 
-      <label htmlFor="category">Tag:</label>
-      <select
-        name="cat"
-        id="category"
-        data-testid="tag-input"
-        onChange={ handleTagChange }
-        value={ minhaTag }
-      >
-        <option value="alimentacao">Alimentação</option>
-        <option value="lazer">Lazer</option>
-        <option value="trabalho">Trabalho</option>
-        <option value="transporte">Transporte</option>
-        <option value="saude">Saúde</option>
-      </select>
+        <label htmlFor="pagamento">Método de Pagamento:</label>
+        <select
+          name="pag"
+          id="pagamento"
+          data-testid="method-input"
+          onChange={ handlePagChange }
+          value={ meuPag }
+        >
+          <option value="dinheiro">Dinheiro</option>
+          <option value="cartao-credito">Cartão de crédito</option>
+          <option value="cartao-debito">Cartão de débito</option>
+        </select>
 
-      <button type="button" onClick={ despesaAdd }>Adicionar Despesa</button>
+        <label htmlFor="category">Tag:</label>
+        <select
+          name="cat"
+          id="category"
+          data-testid="tag-input"
+          onChange={ handleTagChange }
+          value={ minhaTag }
+        >
+          <option value="alimentacao">Alimentação</option>
+          <option value="lazer">Lazer</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="transporte">Transporte</option>
+          <option value="saude">Saúde</option>
+        </select>
+
+        <button type="button" onClick={ despesaAdd }>Adicionar Despesa</button>
 
       </form>
     </>
-  )
+  );
 }
 
 export default WalletForm;
