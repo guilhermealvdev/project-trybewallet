@@ -15,6 +15,7 @@ function WalletForm() {
   const [meuPag, setMeuPag] = useState('dinheiro');
   const [minhaTag, setMinhaTag] = useState('alimentacao');
 
+  //reservado, pode servir pra tabela?
   const [despesaData, setDespesaData] = useState({
     valor: minhaDespesa,
     descricao: minhaDesc,
@@ -53,7 +54,14 @@ function WalletForm() {
     //console.log('Dados Alv Tag:', minhaTag);
   }
 
-  const despesaAdd = () => {
+  const despesaAdd = async () => {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const exchangeRatesData = await response.json();
+  
+    const exchangeRates = {
+      ...(minhaMoeda in exchangeRatesData ? exchangeRatesData[minhaMoeda] : {}),
+    };
+
     const novaDespesa = {
       id: nextId++,
       value: minhaDespesa,
@@ -61,22 +69,15 @@ function WalletForm() {
       method: meuPag,
       tag: minhaTag,
       description: minhaDesc,
+      exchangeRates,
     };
 
     dispatch({ type: 'ADD_EXPENSE', payload: novaDespesa });
     setMinhaDespesa('');
     setMinhaDesc('');
-    setMinhaMoeda('');
-    setMeuPag('');
-    setMinhaTag('');
-    // setDespesaData({
-    //   valor: minhaDespesa,
-    //   descricao: minhaDesc,
-    //   moeda: minhaMoeda,
-    //   metodoPagamento: meuPag,
-    //   tag: minhaTag,
-    // });
-    // console.log('Dados:', despesaData)
+    setMinhaMoeda('USD');
+    setMeuPag('dinheiro');
+    setMinhaTag('alimentacao');
   };
   
   return (

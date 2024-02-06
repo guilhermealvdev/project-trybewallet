@@ -1,8 +1,19 @@
 import { useSelector } from 'react-redux';
+import rootReducer from '../redux/reducers';
+import { useEffect, useState } from 'react';
 
 function Header() {
   const email = useSelector((rootReducer) => rootReducer.user.email);
-
+  const expenses = useSelector((rootReducer) => rootReducer.wallet.expenses);
+  
+  const totalValue = expenses.length > 0
+  ? expenses.reduce((acc, expense) => {
+      const expenseValue = parseFloat(expense.value);
+      const askValue = parseFloat(expense.exchangeRates.ask);
+      return acc + (expenseValue * askValue);
+    }, 0)
+  : 0;
+ 
   return (
     <>
       <div data-testid="email-field">
@@ -10,8 +21,7 @@ function Header() {
         { email }
       </div>
       <div data-testid="total-field">
-        Editar Aqui - Valor deve ser o valor de expenses?
-        É um array vazio, adicionar com um spread o valor 0
+        { totalValue.toFixed(2) }
       </div>
       <div data-testid="header-currency-field">
         BRL

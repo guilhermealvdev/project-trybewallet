@@ -18,3 +18,6 @@ export const fetchData = async () => {
     type: 'FETCH_WALLET',
     payload: data
 }};
+
+
+//
