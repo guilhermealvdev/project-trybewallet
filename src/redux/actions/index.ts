@@ -18,3 +18,10 @@ export const fetchData = async () => {
     payload: data,
   };
 };
+
+export const deleteExpense = (id) => {
+  return {
+    type: 'DELETE_EXPENSE',
+    payload: id,
+  };
+};
