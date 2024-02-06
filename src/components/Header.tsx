@@ -7,7 +7,7 @@ function Header() {
   const totalValue = expenses.length > 0
     ? expenses.reduce((acc, expense) => {
       const expenseValue = parseFloat(expense.value);
-      const askValue = parseFloat(expense.exchangeRates.ask);
+      const askValue = parseFloat(expense.exchangeRates[expense.currency].ask);
       return acc + (expenseValue * askValue);
     }, 0)
     : 0;

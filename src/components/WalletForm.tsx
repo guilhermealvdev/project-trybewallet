@@ -55,11 +55,11 @@ function WalletForm() {
 
   const despesaAdd = async () => {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const exchangeRatesData = await response.json();
+    const exchangeRates = await response.json();
 
-    const exchangeRates = {
-      ...(minhaMoeda in exchangeRatesData ? exchangeRatesData[minhaMoeda] : {}),
-    };
+    // const exchangeRates = {
+    //   ...(minhaMoeda in exchangeRatesData ? exchangeRatesData[minhaMoeda] : {}),
+    // };
 
     const novaDespesa = {
       id: nextId++,
@@ -125,9 +125,9 @@ function WalletForm() {
           onChange={ handlePagChange }
           value={ meuPag }
         >
-          <option value="dinheiro">Dinheiro</option>
-          <option value="cartao-credito">Cartão de crédito</option>
-          <option value="cartao-debito">Cartão de débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
 
         <label htmlFor="category">Tag:</label>
@@ -138,11 +138,11 @@ function WalletForm() {
           onChange={ handleTagChange }
           value={ minhaTag }
         >
-          <option value="alimentacao">Alimentação</option>
-          <option value="lazer">Lazer</option>
-          <option value="trabalho">Trabalho</option>
-          <option value="transporte">Transporte</option>
-          <option value="saude">Saúde</option>
+          <option value="Alimentacao">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saude">Saúde</option>
         </select>
 
         <button type="button" onClick={ despesaAdd }>Adicionar Despesa</button>
